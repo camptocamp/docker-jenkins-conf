@@ -1,7 +1,7 @@
 FROM alpine
 
-VOLUME ["/usr/share/jenkins/ref/init.groovy.d"]
+VOLUME ["/var/jenkins_home/init.groovy.d"]
 
-ADD scripts/* /usr/share/jenkins/ref/init.groovy.d/
+ADD scripts/* /var/jenkins_home/init.groovy.d/
 
 ENTRYPOINT [ "/bin/true" ]

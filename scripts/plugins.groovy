@@ -6,7 +6,9 @@ def logger = Logger.getLogger("")
 def installed = false
 def initialized = false
 
-def pluginParameter="swarm docker-custom-build-environment"
+def env = System.getenv()
+
+def pluginParameter=env['JENKINS_PLUGINS']
 def plugins = pluginParameter.split()
 logger.info("" + plugins)
 def instance = Jenkins.getInstance()

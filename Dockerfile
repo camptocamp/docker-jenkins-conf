@@ -1,7 +1,11 @@
-FROM alpine
+FROM openjdk:8-jdk
 
 VOLUME ["/var/jenkins_home/init.groovy.d"]
+VOLUME ["/var/jenkins_home/.keystore"]
 
 ADD scripts/* /var/jenkins_home/init.groovy.d/
+ADD import-crt.sh /
 
-ENTRYPOINT [ "/bin/true" ]
+RUN chmod +x /import-crt.sh
+
+ENTRYPOINT [ "/import-crt.sh" ]

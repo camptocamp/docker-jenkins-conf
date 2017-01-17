@@ -2,6 +2,9 @@ import jenkins.model.*
 import hudson.security.*
 import org.jenkinsci.plugins.*
 
+def instance = Jenkins.getInstance()
+def env = System.getenv()
+
 String server = env['JENKINS_LDAP_SERVER']
 String rootDN = env['JENKINS_LDAP_ROOT_DN']
 String userSearchBase = env['JENKINS_LDAP_USER_SEARCH_BASE']
@@ -14,5 +17,6 @@ boolean inhibitInferRootDN = false
 
 SecurityRealm ldap_realm = new LDAPSecurityRealm(server, rootDN, userSearchBase, userSearch, groupSearchBase, groupSearchFilter, managerDN, managerPassword, inhibitInferRootDN)
 
-Jenkins.instance.setSecurityRealm(ldap_realm)
-Jenkins.instance.save()
+instance.setSecurityRealm(ldap_realm)
+instance.save()
+instance.reload()

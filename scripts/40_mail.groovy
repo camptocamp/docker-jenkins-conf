@@ -1,7 +1,7 @@
 import jenkins.model.*
 
 def inst = Jenkins.getInstance()
-
+def env = System.getenv()
 def desc = inst.getDescriptor("hudson.tasks.Mailer")
 
 desc.setSmtpAuth(env['JENKINS_MAIL_USER'], env['JENKINS_MAIL_PASSWORD'])

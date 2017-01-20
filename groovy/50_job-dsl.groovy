@@ -14,7 +14,7 @@ Thread.start {
     def job = new FreeStyleProject(jenkins, jobName)
     job.setAssignedLabel(null);
 
-    job.setCustomWorkspace("${JENKINS_HOME}/init.groovy.d/job-dsl")
+    job.setCustomWorkspace("/var/jenkins_home/init.groovy.d/job-dsl")
 
     def ExecuteDslScripts.ScriptLocation scriptlocationFileSys = new ExecuteDslScripts.ScriptLocation('false', "*.json", null);
     def ExecuteDslScripts executeDslScripts = new ExecuteDslScripts(scriptlocationFileSys, false, RemovedJobAction.IGNORE);

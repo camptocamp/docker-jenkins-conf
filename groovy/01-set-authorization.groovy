@@ -1,5 +1,7 @@
-import jenkins.model.*;
-import hudson.security.*;
+import jenkins.model.*
+import hudson.security.ProjectMatrixAuthorizationStrategy
+import hudson.security.AuthorizationStrategy
+import hudson.security.Permission
 
 def env = System.getenv()
 

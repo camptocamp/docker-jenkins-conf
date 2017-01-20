@@ -84,5 +84,6 @@ if ( Jenkins.instance.pluginManager.activePlugins.find { it.shortName == "matrix
 
     // now set the strategy globally
     Jenkins.instance.setAuthorizationStrategy(strategy)
+    Jenkins.instance.save()
   }
 }

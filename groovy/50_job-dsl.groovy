@@ -1,31 +1,20 @@
-import hudson.model.*
-import jenkins.model.*;
-import javaposse.jobdsl.plugin.*;
+import jenkins.model.Jenkins;
+import hudson.model.FreeStyleProject;
 
-Thread.start {
-    sleep 10000
+job = Jenkins.instance.createProject(FreeStyleProject, 'seed-job')
+job.displayName = 'Seed Job'
+job.setCustomWorkspace("/var/jenkins_home/init.groovy.d/job-dsl")
 
-    def jenkins = Jenkins.getInstance()
+builder = new javaposse.jobdsl.plugin.ExecuteDslScripts(
+  new javaposse.jobdsl.plugin.ExecuteDslScripts.ScriptLocation(
+      'false',
+      '*',
+      null),
+  false,
+  javaposse.jobdsl.plugin.RemovedJobAction.DELETE,
+  javaposse.jobdsl.plugin.RemovedViewAction.DELETE,
+  javaposse.jobdsl.plugin.LookupStrategy.JENKINS_ROOT
+)
+job.buildersList.add(builder)
 
-    //Define a job name
-    def jobName = "Seed"
-
-    //Instantiate a new project , canRoam= true
-    def job = new FreeStyleProject(jenkins, jobName)
-    job.setAssignedLabel(null);
-
-    job.setCustomWorkspace("/var/jenkins_home/init.groovy.d/job-dsl")
-
-    def ExecuteDslScripts.ScriptLocation scriptlocationFileSys = new ExecuteDslScripts.ScriptLocation('false', "*.json", null);
-    def ExecuteDslScripts executeDslScripts = new ExecuteDslScripts(scriptlocationFileSys, false, RemovedJobAction.IGNORE);
-
-    job.buildersList.add(executeDslScripts)
-
-    jenkins.add(job, job.getName());
-    jenkins.reload()
-
-    // Run job
-    def jobRef = jenkins.getItem(job.getName());
-    jenkins.getQueue().schedule(jobRef,10);
-
-}
+job.save()

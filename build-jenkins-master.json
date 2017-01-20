@@ -1,0 +1,19 @@
+freeStyleJob("BuildJenkinsMaster"){
+  description ("BuildJenkinsMaster")
+  label ("docker-191")
+  scm {
+    git {
+      remote {
+        name("jenkins-master-docker")
+        url("https://github.com/ogavrisevs/JenkinsDockerCi.git")
+      }
+      branch("*/master")
+    }
+  }
+  steps {
+    shell ("\n"+
+          "dt=`date +\"%y%m%d%H%M\"` \n"+
+          "docker build -t jenkins-master:\${dt} ./jenkins-master-dsl \n"+
+          "docker build -t jenkins-master:latest ./jenkins-master-dsl ")
+  }
+}

@@ -22,7 +22,7 @@ if ( Jenkins.instance.pluginManager.activePlugins.find { it.shortName == "matrix
     println "--> setting project matrix authorization strategy"
     strategy = new hudson.security.ProjectMatrixAuthorizationStrategy()
 
-    //------------------- Authenticated ---------------------------------------
+    //------------------- Authenticated (standard user)---------------------------------------
     authenticatedPermissions = [
       "hudson.model.Hudson.Read",
     ]
@@ -80,6 +80,20 @@ if ( Jenkins.instance.pluginManager.activePlugins.find { it.shortName == "matrix
     }
 
     jenkinsAdmin = BuildPermission.buildNewAccessList(env['JENKINS_ADMIN_GROUPNAME'], jenkinsAdminPermissions)
+    jenkinsAdmin.each { p, u -> strategy.add(p, u) }
+
+    //----------------- Jenkins Swarm (slave node auth) -----------------------------------------
+    jenkinsSwarmPermissions = [
+      "hudson.model.Computer.Build",
+      "hudson.model.Computer.Build",
+      "hudson.model.Computer.Configure",
+      "hudson.model.Computer.Connect",
+      "hudson.model.Computer.Create",
+      "hudson.model.Computer.Delete",
+      "hudson.model.Computer.Disconnect",
+     ]
+
+    jenkinsAdmin = BuildPermission.buildNewAccessList(env['JENKINS_SWARM_USERNAME'], jenkinsSwarmPermissions)
     jenkinsAdmin.each { p, u -> strategy.add(p, u) }
 
     //-------------------------------------------------------------------------

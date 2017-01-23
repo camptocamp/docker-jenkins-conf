@@ -1,3 +1,4 @@
+#!groovy
 import jenkins.model.Jenkins;
 import hudson.security.FullControlOnceLoggedInAuthorizationStrategy;
 import hudson.security.LDAPSecurityRealm;
@@ -5,8 +6,9 @@ import hudson.security.LDAPSecurityRealm;
 def instance = Jenkins.getInstance()
 def env = System.getenv()
 
+instance.authorizationStrategy = new FullControlOnceLoggedInAuthorizationStrategy() ;
+
 if ( Jenkins.instance.pluginManager.activePlugins.find { it.shortName == "ldap" } != null ){
-  instance.authorizationStrategy = new FullControlOnceLoggedInAuthorizationStrategy() ;
   instance.securityRealm= new LDAPSecurityRealm(
     server = env['JENKINS_LDAP_SERVER'],
     rootDN = env['JENKINS_LDAP_ROOT_DN'],

@@ -11,6 +11,7 @@ def env = System.getenv()
 def pluginParameter=env['JENKINS_PLUGINS']
 def plugins = pluginParameter.split()
 logger.info("" + plugins)
+
 def instance = Jenkins.getInstance()
 def pm = instance.getPluginManager()
 def uc = instance.getUpdateCenter()

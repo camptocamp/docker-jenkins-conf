@@ -1,3 +1,4 @@
+#!groovy
 import jenkins.model.*
 
 def inst = Jenkins.getInstance()

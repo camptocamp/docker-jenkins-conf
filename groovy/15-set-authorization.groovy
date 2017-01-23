@@ -1,7 +1,13 @@
+#!groovy
 import jenkins.model.*
 import hudson.security.ProjectMatrixAuthorizationStrategy
 import hudson.security.AuthorizationStrategy
 import hudson.security.Permission
+import jenkins.security.s2m.AdminWhitelistRule
+
+// Enable Slave -> Master Access Control
+Jenkins.instance.injector.getInstance(AdminWhitelistRule.class).setMasterKillSwitch(false);
+Jenkins.instance.save()
 
 def env = System.getenv()
 
@@ -31,35 +37,10 @@ if ( Jenkins.instance.pluginManager.activePlugins.find { it.shortName == "matrix
     authenticated.each { p, u -> strategy.add(p, u) }
 
     //----------------- Jenkins Admin -----------------------------------------
-    jenkinsAdminPermissions = [
-      "hudson.model.Hudson.Administer",
-      "hudson.model.Hudson.ConfigureUpdateCenter",
-      "hudson.model.Hudson.Read",
-      "hudson.model.Hudson.RunScripts",
-      "hudson.model.Hudson.UploadPlugins",
-      "hudson.model.Computer.Build",
-      "hudson.model.Computer.Build",
-      "hudson.model.Computer.Configure",
-      "hudson.model.Computer.Connect",
-      "hudson.model.Computer.Create",
-      "hudson.model.Computer.Delete",
-      "hudson.model.Computer.Disconnect",
-      "hudson.model.Run.Delete",
-      "hudson.model.Run.Update",
-      "hudson.model.View.Configure",
-      "hudson.model.View.Create",
-      "hudson.model.View.Read",
-      "hudson.model.View.Delete",
-      "hudson.model.Item.Create",
-      "hudson.model.Item.Delete",
-      "hudson.model.Item.Configure",
-      "hudson.model.Item.Read",
-      "hudson.model.Item.Discover",
-      "hudson.model.Item.Build",
-      "hudson.model.Item.Workspace",
-      "hudson.model.Item.Cancel"
-     ]
+    def strategy = new hudson.security.ProjectMatrixAuthorizationStrategy()
+    strategy.add(Jenkins.ADMINISTER, env['JENKINS_ADMIN_GROUPNAME'])
 
+    jenkinsAdminPermissions = []
     // plugin 'credentials' permissions
     if ( Jenkins.instance.pluginManager.activePlugins.find { it.shortName == "credentials" } != null ){
       jenkinsAdminPermissions.addAll(["com.cloudbees.plugins.credentials.CredentialsProvider.Create",

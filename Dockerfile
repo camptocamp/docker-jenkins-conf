@@ -3,7 +3,8 @@ FROM openjdk:8-jdk
 VOLUME ["/var/jenkins_home/init.groovy.d"]
 VOLUME ["/var/jenkins_home/.keystore"]
 
-ADD groovy/*.groovy /var/jenkins_home/init.groovy.d/
+ADD init.groovy.d/*.groovy /var/jenkins_home/init.groovy.d/
+ADD job-dsl/*.groovy /var/jenkins_home/job-dsl/
 
 ADD import-crt.sh /
 

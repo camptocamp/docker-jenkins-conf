@@ -1,6 +1,7 @@
 FROM openjdk:8-jdk
 
 VOLUME ["/var/jenkins_home/init.groovy.d"]
+VOLUME ["/var/jenkins_home/job-dsl-scripts"]
 VOLUME ["/var/jenkins_home/.keystore"]
 
 ADD init.groovy.d/*.groovy /var/jenkins_home/init.groovy.d/

@@ -5,7 +5,7 @@ VOLUME ["/var/jenkins_home/job-dsl-scripts"]
 VOLUME ["/var/jenkins_home/.keystore"]
 
 ADD init.groovy.d/*.groovy /var/jenkins_home/init.groovy.d/
-ADD job-dsl-scripts/*.groovy /var/jenkins_home/job-dsl-scripts/
+ADD job-dsl-scripts/* /var/jenkins_home/job-dsl-scripts/
 
 ADD import-crt.sh /
 

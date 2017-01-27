@@ -8,14 +8,20 @@ def env = System.getenv()
 def instance = Jenkins.getInstance()
 def teams = env['JENKINS_TEAMS']
 
-teams.eachLine { team ->
+teams.eachLine { line ->
+  def team_params  = line.split(';')
+  def team_ldap_group = team_params[0]
+  def team_name = team_params[0]
+  if (team_params.size() > 1) {
+    team_name = team_params[1]
+  }
 
   def jobDslScript = """
-folder('${team}') {
-            displayName('${team}')
-            description('Folder for ${team}')
+folder('${team_name}') {
+            displayName('${team_name}')
+            description('CI environment for ${team_name}')
             authorization {
-                permissionAll('${team}')
+                permissionAll('${team_ldap_group}')
             }
         }
 """

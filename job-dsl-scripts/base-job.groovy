@@ -28,7 +28,6 @@ job(job_name) {
         dsl {
             external('*.groovy')
             removeAction('DELETE')
-            ignoreExisting()
         }
     }
 }

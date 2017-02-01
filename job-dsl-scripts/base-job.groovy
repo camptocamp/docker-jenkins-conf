@@ -7,11 +7,11 @@ def jenkins_admin = env['JENKINS_ADMIN_GROUPNAME']
 
 def github_cred_id = "${github_user}-token"
 
-def job_name = "Base Configuration from DSL"
+def folder_name = "admin"
+def job_name = "Generate Team Configurations"
 def github_repo = github_org + '/' + github_base_job_dsl_repo
 
-
-job(job_name) {
+job("${folder_name}/${job_name}") {
     logRotator(-1, 10)
     scm {
         git {

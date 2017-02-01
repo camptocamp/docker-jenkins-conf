@@ -1,3 +1,7 @@
+import jenkins.model.*
+import com.cloudbees.hudson.plugins.folder.*;
+import com.cloudbees.hudson.plugins.folder.properties.*;
+import com.cloudbees.hudson.plugins.folder.properties.FolderCredentialsProvider.FolderCredentialsProperty;
 import com.cloudbees.plugins.credentials.impl.*;
 import com.cloudbees.plugins.credentials.*;
 import com.cloudbees.plugins.credentials.domains.*;
@@ -16,4 +20,22 @@ Credentials c = (Credentials) new UsernamePasswordCredentialsImpl(
   user,
   password
 )
-SystemCredentialsProvider.getInstance().getStore().addCredentials(Domain.global(), c)
+
+jenkins = Jenkins.instance
+for (folder in jenkins.getAllItems(Folder.class)) {
+  if(folder.name.equals('admin')){
+	AbstractFolder<?> folderAbs = AbstractFolder.class.cast(folder)
+    FolderCredentialsProperty property = folderAbs.getProperties().get(FolderCredentialsProperty.class)
+    if(property) {
+        println "Add credentials in global store"
+        property.getStore().addCredentials(Domain.global(), c)
+    } else {
+        println "Initialize Folder Credentials store and add credentials in global store"
+        property = new FolderCredentialsProperty([c])
+        folderAbs.addProperty(property)
+    }
+    println property.getCredentials().toString()
+  }
+}
+
+

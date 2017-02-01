@@ -1,24 +1,41 @@
+#!groovy
 import jenkins.model.*
 import com.cloudbees.hudson.plugins.folder.*;
 import com.cloudbees.hudson.plugins.folder.properties.*;
 import com.cloudbees.hudson.plugins.folder.properties.FolderCredentialsProvider.FolderCredentialsProperty;
 import com.cloudbees.plugins.credentials.impl.*;
 import com.cloudbees.plugins.credentials.*;
+import org.jenkinsci.plugins.plaincredentials.*
+import org.jenkinsci.plugins.plaincredentials.impl.*
 import com.cloudbees.plugins.credentials.domains.*;
+import hudson.util.Secret
 
 def env = System.getenv()
 
 def user = env['JENKINS_GITHUB_USER']
-def credId = "${user}-token"
 def description = "Github token for ${user}"
-def password = env['JENKINS_GITHUB_TOKEN']
+def token = env['JENKINS_GITHUB_TOKEN']
 
-Credentials c = (Credentials) new UsernamePasswordCredentialsImpl(
+// add admin credential for github plugin (will be system only)
+def textCredId = "${user}-token-secret-text"
+Credentials textc = (Credentials) new StringCredentialsImpl(
+  CredentialsScope.SYSTEM,
+  textCredId,
+  description,
+  Secret.fromString(token)
+)
+
+println "Add admin text credentials"
+SystemCredentialsProvider.getInstance().getStore().addCredentials(Domain.global(), textc)
+
+// add admin credential for pipeline generation (will be scoped in admin folder)
+def pwCredId = "${user}-token"
+Credentials pwc = (Credentials) new UsernamePasswordCredentialsImpl(
   CredentialsScope.GLOBAL,
-  credId,
+  pwCredId,
   description,
   user,
-  password
+  token
 )
 
 jenkins = Jenkins.instance
@@ -27,14 +44,13 @@ for (folder in jenkins.getAllItems(Folder.class)) {
 	AbstractFolder<?> folderAbs = AbstractFolder.class.cast(folder)
     FolderCredentialsProperty property = folderAbs.getProperties().get(FolderCredentialsProperty.class)
     if(property) {
-        println "Add credentials in global store"
-        property.getStore().addCredentials(Domain.global(), c)
+        println "Add admin credentials"
+        property.getStore().addCredentials(Domain.global(), pwc)
     } else {
         println "Initialize Folder Credentials store and add credentials in global store"
-        property = new FolderCredentialsProperty([c])
+        property = new FolderCredentialsProperty([pwc])
         folderAbs.addProperty(property)
     }
-    println property.getCredentials().toString()
   }
 }
 

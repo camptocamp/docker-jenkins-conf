@@ -15,7 +15,3 @@ desc.setCharset("UTF-8")
 desc.save()
 inst.save()
 
-// Set the administrator email address
-def jenkinsLocationConfiguration = JenkinsLocationConfiguration.get()
-jenkinsLocationConfiguration.setAdminAddress(env['JENKINS_MAIL_ADDRESS'])
-jenkinsLocationConfiguration.save()

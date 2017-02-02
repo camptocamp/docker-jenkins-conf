@@ -29,8 +29,16 @@ if ( Jenkins.instance.pluginManager.activePlugins.find { it.shortName == "matrix
     strategy = new hudson.security.ProjectMatrixAuthorizationStrategy()
 
 
-    //------------------- Authenticated (standard user)---------------------------------------
+    //------------------- anonymous -------------------------------------------
+    // (view build status only for image access from the README of github)
     authenticatedPermissions = [
+      "hudson.model.Item.ViewStatus",
+    ]
+
+    authenticated = BuildPermission.buildNewAccessList("anonymous", authenticatedPermissions)
+    authenticated.each { p, u -> strategy.add(p, u) }
+
+    //------------------- Authenticated (standard user)------------------------
       "hudson.model.Hudson.Read",
     ]
 

@@ -4,5 +4,4 @@ if ( Jenkins.instance.pluginManager.activePlugins.find { it.shortName == "locale
     plugin.setSystemLocale('en')
     plugin.ignoreAcceptLanguage = true
     plugin.save()
-    Jenkins.instance.save()
 }

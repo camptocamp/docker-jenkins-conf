@@ -31,14 +31,15 @@ if ( Jenkins.instance.pluginManager.activePlugins.find { it.shortName == "matrix
 
     //------------------- anonymous -------------------------------------------
     // (view build status only for image access from the README of github)
-    authenticatedPermissions = [
+    anonymousPermissions = [
       "hudson.model.Item.ViewStatus",
     ]
 
-    authenticated = BuildPermission.buildNewAccessList("anonymous", authenticatedPermissions)
-    authenticated.each { p, u -> strategy.add(p, u) }
+    anonymous = BuildPermission.buildNewAccessList("anonymous", anonymousPermissions)
+    anonymous.each { p, u -> strategy.add(p, u) }
 
     //------------------- Authenticated (standard user)------------------------
+    authenticatedPermissions = [
       "hudson.model.Hudson.Read",
     ]
 

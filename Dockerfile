@@ -4,9 +4,16 @@ VOLUME ["/var/jenkins_home/init.groovy.d"]
 VOLUME ["/var/jenkins_home/job-dsl-scripts"]
 VOLUME ["/var/jenkins_home/.keystore"]
 VOLUME ["/var/jenkins_home/plugins"]
-VOLUME ["/usr/share/jenkins"]
 
-RUN mkdir -p /usr/local/bin/
+ENV JENKINS_VERSION=2.32.2
+
+RUN mkdir -p /usr/local/bin/ \
+  && mkdir -p /usr/share/jenkins
+
+# Download jenkins war of current jenkins version to determine the included plugins
+RUN curl -fsSLO https://updates.jenkins-ci.org/download/war/$JENKINS_VERSION/jenkins.war \
+  && cp jenkins.war /usr/share/jenkins \
+  && rm -f jenkins.war
 
 ADD init.groovy.d/*.groovy /var/jenkins_home/init.groovy.d/
 ADD job-dsl-scripts/* /var/jenkins_home/job-dsl-scripts/

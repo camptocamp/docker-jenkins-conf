@@ -14,6 +14,8 @@ export -f $(lsfns)
 find /usr/share/jenkins/ref/ -type f -exec bash -c 'copy_reference_file {}' \;
 echo "$(cat /install-plugins.log)"
 
+chown -R 1000.1000 /var/jenkins_home/plugins
+
 # import ldap server ssl certificate
 ./import-crt.sh
 

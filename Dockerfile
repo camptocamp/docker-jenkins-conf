@@ -22,8 +22,11 @@ ADD install-plugins.sh /usr/local/bin/
 ADD import-crt.sh /
 ADD entrypoint.sh /
 
-RUN chmod +x /usr/local/bin/install-plugins.sh
-RUN chmod +x /import-crt.sh
-RUN chmod +x /entrypoint.sh
+RUN chmod +x /usr/local/bin/install-plugins.sh \
+  && chmod +x /import-crt.sh \
+  && chmod +x /entrypoint.sh \
+  && chown -R 1000.1000 /var/jenkins_home/init.groovy.d \
+  && chown -R 1000.1000 /var/jenkins_home/job-dsl-scripts \
+  && chown -R 1000.1000 /var/jenkins_home/plugins
 
 ENTRYPOINT [ "/entrypoint.sh" ]

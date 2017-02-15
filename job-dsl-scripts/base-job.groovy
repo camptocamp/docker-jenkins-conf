@@ -26,8 +26,9 @@ job("${folder_name}/${job_name}") {
     }
     steps {
         dsl {
-            external('*.groovy')
+            external('dsl/*.groovy')
             removeAction('DELETE')
         }
+        systemGroovyScriptFile('system/postConfig.groovy') {}
     }
 }

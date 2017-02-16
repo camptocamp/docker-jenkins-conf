@@ -12,6 +12,7 @@ def job_name = "Generate_Team_Folders_and_Configurations"
 def github_repo = github_org + '/' + github_base_job_dsl_repo
 
 job("${folder_name}/${job_name}") {
+    label('master')
     logRotator(-1, 10)
     scm {
         git {
@@ -23,9 +24,6 @@ job("${folder_name}/${job_name}") {
     }
     authorization {
         permissionAll(jenkins_admin)
-    }
-    parameters {
-        nodeLabel('master')
     }
     steps {
         dsl {

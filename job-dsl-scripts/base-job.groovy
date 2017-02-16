@@ -24,6 +24,9 @@ job("${folder_name}/${job_name}") {
     authorization {
         permissionAll(jenkins_admin)
     }
+    parameters {
+        nodeLabel('master')
+    }
     steps {
         dsl {
             external('dsl/*.groovy')

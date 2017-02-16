@@ -1,4 +1,4 @@
-#!/usr/bin/env groovy
+#!groovy
 import jenkins.model.Jenkins
 import org.jenkinsci.plugins.github.config.GitHubServerConfig
 

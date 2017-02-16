@@ -8,7 +8,7 @@ def jenkins_admin = env['JENKINS_ADMIN_GROUPNAME']
 def github_cred_id = "${github_user}-token"
 
 def folder_name = "admin"
-def job_name = "Generate Team Configurations"
+def job_name = "Generate_Team_Folders_and_Configurations"
 def github_repo = github_org + '/' + github_base_job_dsl_repo
 
 job("${folder_name}/${job_name}") {

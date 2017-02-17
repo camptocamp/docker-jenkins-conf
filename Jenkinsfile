@@ -10,7 +10,7 @@ pipeline {
       steps {
         sh "git describe --abbrev=0 --tags > .git/last-tag"
         script {
-          def last_tag = readProperties file:'.git/last-tag'
+          def last_tag = readFile('.git/last-tag')
           env['last_tag'] = last_tag
         }
         sh "docker build -t 'camptocamp/jenkins-conf:${env.last_tag}'' ."

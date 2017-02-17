@@ -1,6 +1,14 @@
 final IMAGE_BASE_NAME = 'camptocamp/jenkins-conf'
 final DOCKER_REGISTRY_URL = 'https://registry.hub.docker.com'
 
+// enable trigger on push
+properties([
+    pipelineTriggers([
+      [$class: "GitHubPushTrigger"]
+    ])
+])
+
+
 ansiColor('xterm') {
     node("docker") {
         sh 'git describe --abbrev=0 --tags > .git/last-tag'

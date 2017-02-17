@@ -1,5 +1,5 @@
-final IMAGE_BASE_NAME = 'camptocamp/jenkins-conf'
-final DOCKER_REGISTRY_URL = 'https://registry.hub.docker.com'
+IMAGE_BASE_NAME = 'camptocamp/jenkins-conf'
+DOCKER_REGISTRY_URL = 'https://registry.hub.docker.com'
 
 node("docker") {
     docker.withRegistry(${DOCKER_REGISTRY_URL}, 'dockerhubc2c') {

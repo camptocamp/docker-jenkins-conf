@@ -1,12 +1,11 @@
+final IMAGES_BASE_NAME = 'camptocamp/saccas_suissealpine'
+sh 'git describe --abbrev=0 --tags > .git/last-tag'
+def tag = readFile('.git/last-tag').trim()
+
 node("docker") {
-
-    //docker.withRegistry('<<your-docker-registry>>', '<<your-docker-registry-credentials-id>>') {
-
+    docker.withRegistry('dockerhub', 'dockerhubc2c') {
     stage "build"
-    def last_tag = sh('git describe --abbrev=0 --tags > .git/last-tag')
-    println last_tag
-    def app = docker.build "camptocamp/jenkins-conf:${last_tag}"
-
+    def app = docker.build "camptocamp/jenkins-conf:${tag}"
     stage "publish"
-    app.push last_tag
+    app.push tag
 }

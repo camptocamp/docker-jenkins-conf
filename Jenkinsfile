@@ -4,8 +4,9 @@ def tag = readFile('.git/last-tag').trim()
 
 node("docker") {
     docker.withRegistry('dockerhub', 'dockerhubc2c') {
-    stage "build"
-    def app = docker.build "camptocamp/jenkins-conf:${tag}"
-    stage "publish"
-    app.push tag
+        stage "build"
+        def app = docker.build "camptocamp/jenkins-conf:${tag}"
+        stage "publish"
+        app.push tag
+    }
 }

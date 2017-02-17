@@ -1,12 +1,12 @@
 pipeline {
 
+  agent {
+    label 'docker'
+  }
+
   stages {
 
     stage('build docker image') {
-
-      agent {
-        label 'docker'
-      }
 
       steps {
         sh "git describe --abbrev=0 --tags > .git/last-tag"

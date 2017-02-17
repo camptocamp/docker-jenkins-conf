@@ -8,9 +8,9 @@ properties([
     ])
 ])
 
-
 ansiColor('xterm') {
     node("docker") {
+        checkout scm
         sh 'git describe --abbrev=0 --tags > last-tag'
         def tag = readFile('last-tag').trim()
 

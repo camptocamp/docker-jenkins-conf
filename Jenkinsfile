@@ -8,10 +8,8 @@ pipeline {
   stages {
     stage('build docker image') {
       steps {
-        sh "git describe --abbrev=0 --tags > .git/last-tag"
         script {
-          def last_tag = readFile('.git/last-tag')
-          env['last_tag'] = last_tag
+          env['last_tag'] = sh(script: "git describe --abbrev=0 --tags > .git/last-tag", returnStdout: true).trim()
         }
         sh "docker build -t 'camptocamp/jenkins-conf:${env.last_tag}'' ."
       }

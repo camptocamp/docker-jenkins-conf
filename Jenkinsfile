@@ -16,7 +16,7 @@ pipeline {
         println last_tag
       }
       steps {
-        docker.build("camptocamp/jenkins-conf:${last_tag}")
+        sh "docker build -t 'camptocamp/jenkins-conf:${last_tag}'' ."
       }
 
     }

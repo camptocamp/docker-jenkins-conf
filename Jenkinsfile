@@ -8,11 +8,12 @@ properties([
     ])
 ])
 
+
 ansiColor('xterm') {
     node("docker") {
         checkout scm
-        sh 'git describe --abbrev=0 --tags > last-tag'
-        def tag = readFile('last-tag').trim()
+        sh 'git describe --abbrev=0 --tags > .git/last-tag'
+        def tag = readFile('.git/last-tag').trim()
 
         stage "build docker image"
         def app = docker.build "${IMAGE_BASE_NAME}:${tag}"
@@ -26,7 +27,7 @@ ansiColor('xterm') {
         ){
             sh 'docker login -u "$USERNAME" -p "$PASSWORD"'
             docker.image("${IMAGE_BASE_NAME}:${tag}").push()
-            sh 'rm last-tag'
+            sh 'rm .git/last-tag'
         }
     }
 }

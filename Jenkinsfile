@@ -11,7 +11,7 @@ properties([
 
 ansiColor('xterm') {
     node("docker") {
-        // checkout scm
+        checkout scm
         sh 'git describe --abbrev=0 --tags > .git/last-tag'
         def tag = readFile('.git/last-tag').trim()
 

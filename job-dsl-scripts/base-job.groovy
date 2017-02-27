@@ -8,7 +8,7 @@ def jenkins_admin = env['JENKINS_ADMIN_GROUPNAME']
 def github_cred_id = "${github_user}-token"
 
 def folder_name = "admin"
-def job_name = "Initial jobs"
+def job_name = "initialize"
 def github_repo = github_org + '/' + github_base_job_dsl_repo
 
 job("${folder_name}/${job_name}") {
@@ -26,9 +26,7 @@ job("${folder_name}/${job_name}") {
         permissionAll(jenkins_admin)
     }
 
-    job("admin/initial_jobs") {
-        steps {
-            systemGroovyCommand(readFileFromWorkspace("admin/*.groovy")) {}
-        }
+    steps {
+        systemGroovyCommand(readFileFromWorkspace("admin/initialize.groovy")) {}
     }
 }

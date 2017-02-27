@@ -8,7 +8,7 @@ def jenkins_admin = env['JENKINS_ADMIN_GROUPNAME']
 def github_cred_id = "${github_user}-token"
 
 def folder_name = "admin"
-def job_name = "Generate_Team_Folders_and_Configurations"
+def job_name = "Initial jobs"
 def github_repo = github_org + '/' + github_base_job_dsl_repo
 
 job("${folder_name}/${job_name}") {
@@ -24,10 +24,10 @@ job("${folder_name}/${job_name}") {
     authorization {
         permissionAll(jenkins_admin)
     }
-    steps {
-        dsl {
-            external('dsl/*.groovy')
-            removeAction('DELETE')
+
+    job("admin/initial_jobs") {
+        steps {
+            systemGroovyCommand(readFileFromWorkspace("admin/*.groovy")) {}
         }
     }
 }

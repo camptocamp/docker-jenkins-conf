@@ -18,6 +18,7 @@ job("${folder_name}/${job_name}") {
             remote {
                 github(github_repo)
                 credentials(github_cred_id)
+                refspec('seed_job')
             }
         }
     }

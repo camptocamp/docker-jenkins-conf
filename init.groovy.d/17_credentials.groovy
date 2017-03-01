@@ -11,32 +11,57 @@ import com.cloudbees.plugins.credentials.domains.*;
 import hudson.util.Secret
 
 def env = System.getenv()
-def user = env['JENKINS_GITHUB_USER']
-def token = env['JENKINS_GITHUB_TOKEN']
 
-if (user && token) {
-
-  def description = "Github token for ${user}"
+def hipchat_token = env['JENKINS_HIPCHAT_TOKEN']
+if (hipchat_token) {
   // add admin credential for github plugin (will be system only)
-  def textCredId = "${user}-token-secret-text"
+  def hipchatTextCredId = "hipchat-global-token"
+  Credentials hipchatTextc = (Credentials) new StringCredentialsImpl(
+    CredentialsScope.GLOBAL,
+    hipchatTextCredId,
+    "HipChat token for Jenkins",
+    Secret.fromString(hipchat_token)
+  )
+
+  println "Add HipChat token text credentials in GLOBAL scope"
+  SystemCredentialsProvider.getInstance().getStore().addCredentials(Domain.global(), hipchatTextc)
+}
+
+def github_user = env['JENKINS_GITHUB_ADMIN_USER']
+def github_token = env['JENKINS_GITHUB_ADMIN_TOKEN']
+
+if (github_user && github_token) {
+  def textCredId = "${github_user}-system-token"
   Credentials textc = (Credentials) new StringCredentialsImpl(
     CredentialsScope.SYSTEM,
     textCredId,
-    description,
-    Secret.fromString(token)
+    "Github system token for ${github_user}",
+    Secret.fromString(github_token)
   )
 
-  println "Add admin text credentials"
+  println "Add Github token text credentials in SYSTEM scope"
   SystemCredentialsProvider.getInstance().getStore().addCredentials(Domain.global(), textc)
 
+  def pwCredIds = "${github_user}-system-user-pw-token"
+  Credentials pwcs = (Credentials) new UsernamePasswordCredentialsImpl(
+    CredentialsScope.SYSTEM,
+    pwCredIds,
+    "Github system user/password with token for ${github_user}",,
+    github_user,
+    github_token
+  )
+
+  println "Add Github token credentials in SYSTEM scope"
+  SystemCredentialsProvider.getInstance().getStore().addCredentials(Domain.global(), pwcs)
+
   // add admin credential for pipeline generation (will be scoped in admin folder)
-  def pwCredId = "${user}-token"
+  def pwCredId = "${github_user}-admin-token"
   Credentials pwc = (Credentials) new UsernamePasswordCredentialsImpl(
     CredentialsScope.GLOBAL,
     pwCredId,
-    description,
-    user,
-    token
+    "Github admin user/password with token for ${github_user}",,
+    github_user,
+    github_token
   )
 
   jenkins = Jenkins.instance
@@ -45,13 +70,29 @@ if (user && token) {
   	AbstractFolder<?> folderAbs = AbstractFolder.class.cast(folder)
       FolderCredentialsProperty property = folderAbs.getProperties().get(FolderCredentialsProperty.class)
       if(property) {
-          println "Add admin credentials"
+          println "Add Github token credentials in admin folder's GLOBAL scope"
           property.getStore().addCredentials(Domain.global(), pwc)
       } else {
-          println "Initialize Folder Credentials store and add credentials in global store"
+          println "Initialize Folder Credentials store and add Github token credentials in admin folder's GLOBAL scope"
           property = new FolderCredentialsProperty([pwc])
           folderAbs.addProperty(property)
       }
     }
   }
+}
+
+def pipeline_token = env['JENKINS_GITHUB_PIPELINE_TOKEN']
+if (pipeline_token) {
+
+  def pwCredIdglob = "pipeline-library-token"
+  Credentials pwcglob = (Credentials) new UsernamePasswordCredentialsImpl(
+    CredentialsScope.GLOBAL,
+    pwCredIdglob,
+    "Read access on pipeline shared library",
+    "pipeline-library",
+    pipeline_token
+  )
+
+  println "Add Github token for pipeline library in GLOBAL scope"
+  SystemCredentialsProvider.getInstance().getStore().addCredentials(Domain.global(), pwcglob)
 }

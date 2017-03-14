@@ -30,4 +30,7 @@ RUN chmod +x /usr/local/bin/install-plugins.sh \
   && chown -R 1000.1000 /var/jenkins_home/job-dsl-scripts \
   && chown -R 1000.1000 /var/jenkins_home/plugins
 
+RUN export JENKINS_UC="http://updates.jenkins-ci.org" \
+  && /usr/local/bin/install-plugins.sh $(cat ./plugins.txt)
+
 ENTRYPOINT [ "/entrypoint.sh" ]

@@ -19,6 +19,7 @@ ADD init.groovy.d/*.groovy /var/jenkins_home/init.groovy.d/
 ADD job-dsl-scripts/* /var/jenkins_home/job-dsl-scripts/
 ADD jenkins-support /usr/local/bin/
 ADD install-plugins.sh /usr/local/bin/
+ADD plugins.txt /
 ADD import-crt.sh /
 ADD entrypoint.sh /
 

@@ -21,7 +21,7 @@ jenkinsLocationConfiguration.save()
 inst.save()
 
 systemMessage = "This Jenkins instance is generated from code.\n " +
-                "Avoid any manual changes since they will be discarded with new deployment.\n "
+                "Beside of needed credentials, avoid any manual changes since they will be discarded with new deployment.\n "
 
 println "Set system message to:\n ${systemMessage}"
 Jenkins.instance.setSystemMessage(systemMessage)

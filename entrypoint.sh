@@ -3,7 +3,7 @@
 # download plugins
 export JENKINS_UC="http://updates.jenkins-ci.org"
 echo "downloading base plugins"
-/usr/local/bin/install-plugins.sh ./plugins.txt
+/usr/local/bin/install-plugins.sh $(cat ./plugins.txt)
 
 echo "downloading custom plugins"
 /usr/local/bin/install-plugins.sh $JENKINS_PLUGINS

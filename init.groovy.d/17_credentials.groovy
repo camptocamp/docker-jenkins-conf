@@ -59,8 +59,8 @@ if (github_user && github_token && github_private_key) {
   def sysSshCredId = "${github_user}-system-ssh"
   Credentials sysSshCred = new BasicSSHUserPrivateKey(
     CredentialsScope.SYSTEM,
-    github_user,
     sysSshCredId,
+    github_user,
     new BasicSSHUserPrivateKey.DirectEntryPrivateKeySource(github_private_key),
     "",
     ""
@@ -91,8 +91,8 @@ if (github_user && github_token && github_private_key) {
 
   Credentials adminFoldersshCred = new BasicSSHUserPrivateKey(
     CredentialsScope.GLOBAL,
-    github_user,
     adminFoldersshCredId,
+    github_user,
     new BasicSSHUserPrivateKey.DirectEntryPrivateKeySource(github_private_key),
     "",
     ""

@@ -7,7 +7,7 @@ def jenkins_admin = env['JENKINS_ADMIN_GROUPNAME']
 
 if (github_user && github_org && github_base_job_dsl_repo && jenkins_admin) {
 
-    def github_cred_id = "${github_user}-admin-token"
+    def github_cred_id = "${github_user}-admin-user-pw-token"
     def folder_name = "admin"
     def job_name = "00_initial_dsl_job"
     def github_repo = github_org + '/' + github_base_job_dsl_repo

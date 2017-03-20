@@ -5,7 +5,7 @@ import javaposse.jobdsl.dsl.DslScriptLoader
 import javaposse.jobdsl.plugin.JenkinsJobManagement
 
 def env = System.getenv()
-def user = env['JENKINS_GITHUB_ADMIN_USER']
+def user = env['JENKINS_GITHUB_USER']
 def jenkins_admin = env['JENKINS_ADMIN_GROUPNAME']
 def folder_name = 'admin'
 

@@ -1,6 +1,6 @@
 def env = System.getenv()
 
-def github_user = env['JENKINS_GITHUB_ADMIN_USER']
+def github_user = env['JENKINS_GITHUB_USER']
 def github_org = env['JENKINS_GITHUB_ORG']
 def github_base_job_dsl_repo = env['JENKINS_INITIAL_DSL_REPO']
 def jenkins_admin = env['JENKINS_ADMIN_GROUPNAME']

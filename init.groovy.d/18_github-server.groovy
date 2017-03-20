@@ -3,7 +3,7 @@ import jenkins.model.Jenkins
 import org.jenkinsci.plugins.github.config.GitHubServerConfig
 
 def env = System.getenv()
-def github_user = env['JENKINS_GITHUB_ADMIN_USER']
+def github_user = env['JENKINS_GITHUB_USER']
 def github_api_url = "https://api.github.com"
 
 if (github_user) {

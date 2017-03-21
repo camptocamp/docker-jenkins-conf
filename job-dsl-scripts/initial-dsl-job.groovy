@@ -1,7 +1,7 @@
 def env = System.getenv()
 
 def github_initial_dsl_repo_url = env['JENKINS_INITIAL_DSL_REPO']
-def github_initial_dsl_repo_tag = env['JENKINS_INITIAL_DSL_REF']
+def github_initial_dsl_repo_branch = env['JENKINS_INITIAL_DSL_BRANCH']
 
 def github_user = env['JENKINS_GITHUB_USER']
 def github_org = env['JENKINS_GITHUB_ORG']
@@ -29,9 +29,9 @@ if (github_user && github_org && github_config_repo && jenkins_admin) {
                     }
                 }
                 git {
+                    branch(github_initial_dsl_repo_branch)
                     remote {
                         url(github_initial_dsl_repo_url)
-                        refspec(github_initial_dsl_repo_tag)
                     }
                 }
             }

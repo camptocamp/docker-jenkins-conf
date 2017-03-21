@@ -15,7 +15,7 @@ if (github_user && github_org && github_config_repo && jenkins_admin) {
     def job_name = "00_initial_dsl_job"
     def github_repo = github_org + '/' + github_config_repo
 
-        pipelinejob("${folder_name}/${job_name}") {
+        pipelineJob("${folder_name}/${job_name}") {
             logRotator(-1, 10)
             dir('config'){
                 scm {

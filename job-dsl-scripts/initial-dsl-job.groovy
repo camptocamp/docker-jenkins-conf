@@ -15,20 +15,19 @@ if (github_user && github_org && github_config_repo && jenkins_admin) {
     def job_name = "00_initial_dsl_job"
     def github_repo = github_org + '/' + github_config_repo
 
-        pipelineJob("${folder_name}/${job_name}") {
+        job("${folder_name}/${job_name}") {
             logRotator(-1, 10)
-            dir('config'){
-                scm {
-                    git {
-                        remote {
-                            github(github_repo)
-                            credentials(github_cred_id)
-                        }
+
+            multiscm {
+                git {
+                    remote {
+                        github(github_repo)
+                        credentials(github_cred_id)
+                    }
+                    extensions {
+                        relativeTargetDirectory('config')
                     }
                 }
-            }
-
-            scm {
                 git {
                     remote {
                         url(github_initial_dsl_repo_url)

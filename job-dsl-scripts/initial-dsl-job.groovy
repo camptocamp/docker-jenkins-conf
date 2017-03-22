@@ -43,7 +43,9 @@ if (github_user && github_org && github_config_repo && jenkins_admin) {
             steps {
                 dsl {
                     external('*.groovy')
-                    removeAction('DELETE')
+                    ignoreExisting()
+                    removeAction('DISABLE')
+                    removeViewAction('DISABLE')
                 }
             }
         }

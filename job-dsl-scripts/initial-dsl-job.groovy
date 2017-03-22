@@ -45,7 +45,7 @@ if (github_user && github_org && github_config_repo && jenkins_admin) {
                     external('*.groovy')
                     ignoreExisting()
                     removeAction('DISABLE')
-                    removeViewAction('DISABLE')
+                    removeViewAction('DELETE')
                 }
             }
         }

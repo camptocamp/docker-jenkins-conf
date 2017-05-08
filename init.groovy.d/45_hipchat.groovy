@@ -3,6 +3,7 @@ import java.lang.reflect.Field;
 
 def env = System.getenv()
 hipchat_token = env['JENKINS_HIPCHAT_TOKEN']
+hipchat_room = env['JENKINS_HIPCHAT_ROOM']
 if (hipchat_token) {
   if ( Jenkins.instance.pluginManager.activePlugins.find { it.shortName == "hipchat" } != null ) {
     println "--> setting hipchat plugin"
@@ -22,7 +23,7 @@ if (hipchat_token) {
                               break
         case "credentialId"   : f.set(descriptor, "hipchat-global-token")
                               break
-        case "room"           : f.set(descriptor, "Jenkins CI")
+        case "room"           : f.set(descriptor, hipchat_room)
                               break
         case "sendAs"         : f.set(descriptor, "Jenkins")
                               break

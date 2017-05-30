@@ -5,7 +5,7 @@ VOLUME ["/var/jenkins_home/job-dsl-scripts"]
 VOLUME ["/var/jenkins_home/.keystore"]
 VOLUME ["/var/jenkins_home/plugins"]
 
-ENV JENKINS_VERSION=2.46.2
+ENV JENKINS_VERSION=2.46.3
 
 RUN mkdir -p /usr/local/bin/ \
   && mkdir -p /usr/share/jenkins

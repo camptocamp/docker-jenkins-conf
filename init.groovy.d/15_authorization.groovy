@@ -41,6 +41,11 @@ if ( Jenkins.instance.pluginManager.activePlugins.find { it.shortName == "matrix
     //------------------- Authenticated (standard user)------------------------
     authenticatedPermissions = [
       "hudson.model.Hudson.Read",
+      "hudson.model.Item.ExtendedRead",
+      "hudson.model.Item.Build",
+      "hudson.model.Item.Cancel",
+      "hudson.model.Computer.Connect",
+      "hudson.model.Computer.Disconnect",
     ]
 
     authenticated = BuildPermission.buildNewAccessList("authenticated", authenticatedPermissions)
@@ -77,9 +82,9 @@ if ( Jenkins.instance.pluginManager.activePlugins.find { it.shortName == "matrix
       "hudson.model.Computer.Build",
       "hudson.model.Computer.Build",
       "hudson.model.Computer.Configure",
-      "hudson.model.Computer.Connect",
       "hudson.model.Computer.Create",
       "hudson.model.Computer.Delete",
+      "hudson.model.Computer.Connect",
       "hudson.model.Computer.Disconnect",
      ]
 

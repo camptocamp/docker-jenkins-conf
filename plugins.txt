@@ -32,7 +32,7 @@ disk-usage:0.28
 display-url-api:2.0
 docker-commons:1.6
 docker-custom-build-environment:1.6.5
-docker-workflow:1.11
+docker-workflow:1.9
 durable-task:1.13
 email-ext:2.57.2
 embeddable-build-status:1.9

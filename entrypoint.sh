@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # download plugins
-export JENKINS_UC="http://updates.jenkins-ci.org"
+export JENKINS_UC="http://mirrors.jenkins-ci.org"
 
 echo "downloading custom plugins"
 /usr/local/bin/install-plugins.sh $JENKINS_PLUGINS

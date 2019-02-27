@@ -50,7 +50,6 @@ github-organization-folder:1.6
 github:1.27.0
 groovy:2.0
 handlebars:1.1.1
-hipchat:2.1.1
 http_request:1.8.20
 icon-shim:2.0.3
 jackson2-api:2.7.3

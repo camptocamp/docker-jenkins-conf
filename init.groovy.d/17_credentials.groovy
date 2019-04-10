@@ -13,21 +13,6 @@ import hudson.util.Secret
 
 def env = System.getenv()
 
-def hipchat_token = env['JENKINS_HIPCHAT_TOKEN']
-if (hipchat_token) {
-  // add admin credential for github plugin (will be system only)
-  def hipchatTextCredId = "hipchat-global-token"
-  Credentials hipchatTextc = (Credentials) new StringCredentialsImpl(
-    CredentialsScope.GLOBAL,
-    hipchatTextCredId,
-    "HipChat token for Jenkins",
-    Secret.fromString(hipchat_token)
-  )
-
-  println "Add HipChat token text credentials in GLOBAL scope"
-  SystemCredentialsProvider.getInstance().getStore().addCredentials(Domain.global(), hipchatTextc)
-}
-
 def github_user = env['JENKINS_GITHUB_USER']
 def github_token = env['JENKINS_GITHUB_TOKEN']
 def github_private_key = env['JENKINS_GITHUB_SSH_PRIVATE_KEY']
